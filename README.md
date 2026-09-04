@@ -1,35 +1,32 @@
-# v0-redesign-de-marca-premium
+# ROSÉ Beauty — Concept Brand
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+Redesign editorial de uma marca conceitual de skincare e beleza. O projeto é uma demonstração de direção de arte, experiência de loja e desenvolvimento front-end; não representa uma empresa real e não processa pedidos, cadastros ou pagamentos.
 
-## Built with v0
+## Direção
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+- composição editorial assimétrica e mobile-first;
+- paleta em marfim, vinho e rosé queimado;
+- fotografia autoral gerada especificamente para a identidade ROSÉ;
+- catálogo centralizado em `lib/products.ts`;
+- menu mobile, pesquisa, mini-sacola e newsletter demonstrativos;
+- animações em CSS e `IntersectionObserver`, com suporte a `prefers-reduced-motion`;
+- SEO básico com metadata, canonical, Open Graph, robots e sitemap.
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_jf8qxa39P2ID6qfCfGHA1CZ7AGTs)
-
-## Getting Started
-
-First, run the development server:
+## Desenvolvimento
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+corepack pnpm install
+corepack pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Validação de produção:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+corepack pnpm lint
+corepack pnpm exec tsc --noEmit
+corepack pnpm build
+```
 
-## Learn More
+## Nota sobre conteúdo
 
-To learn more, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
-
-<a href="https://v0.app/chat/api/kiro/clone/lucassfp1/v0-redesign-de-marca-premium" alt="Open in Kiro"><img src="https://pdgvvgmkdvyeydso.public.blob.vercel-storage.com/open%20in%20kiro.svg?sanitize=true" /></a>
+Preços, produtos, textos, políticas, links sociais e comportamentos de comércio são exclusivamente conceituais. Nenhuma alegação clínica, certificação, avaliação ou resultado de cliente é apresentado como real.

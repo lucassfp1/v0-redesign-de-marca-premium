@@ -1,23 +1,27 @@
+import { BrandStory, Campaign, Ingredients, Journal, Manifesto, ProductFeature } from "@/components/editorial-sections"
+import { FeaturedProducts } from "@/components/featured-products"
+import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
-import { FeaturedProducts } from "@/components/featured-products"
-import { AboutBrand } from "@/components/about-brand"
-import { Testimonials } from "@/components/testimonials"
-import { PremiumCTA } from "@/components/premium-cta"
 import { Newsletter } from "@/components/newsletter"
-import { Footer } from "@/components/footer"
+import { ShopProvider } from "@/components/shop-provider"
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <ShopProvider>
       <Header />
-      <Hero />
-      <FeaturedProducts />
-      <AboutBrand />
-      <Testimonials />
-      <PremiumCTA />
-      <Newsletter />
+      <main>
+        <Hero />
+        <Manifesto />
+        <FeaturedProducts />
+        <ProductFeature />
+        <Ingredients />
+        <BrandStory />
+        <Campaign />
+        <Journal />
+        <Newsletter />
+      </main>
       <Footer />
-    </main>
+    </ShopProvider>
   )
 }
