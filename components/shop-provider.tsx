@@ -1,24 +1,22 @@
 "use client"
 
-import {
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react"
-import type { Product } from "@/lib/products"
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react"
+import type { Product, Shade } from "@/lib/products"
 
-type CartItem = Product & { quantity: number }
+export type CartItem = Product & {
+  cartId: string
+  quantity: number
+  selectedShade: Shade
+}
 
 type ShopContextValue = {
   items: CartItem[]
   count: number
   cartOpen: boolean
   setCartOpen: (open: boolean) => void
-  addItem: (product: Product) => void
-  decrementItem: (id: string) => void
-  removeItem: (id: string) => void
+  addItem: (product: Product, shade?: Shade) => void
+  decrementItem: (cartId: string) => void
+  removeItem: (cartId: string) => void
 }
 
 const ShopContext = createContext<ShopContextValue | null>(null)
@@ -27,51 +25,37 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
 
-  const addItem = (product: Product) => {
+  const addItem = (product: Product, shade = product.swatches[0]) => {
+    const cartId = `${product.id}-${shade.name}`
     setItems((current) => {
-      const found = current.find((item) => item.id === product.id)
+      const found = current.find((item) => item.cartId === cartId)
       if (found) {
         return current.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item,
+          item.cartId === cartId ? { ...item, quantity: item.quantity + 1 } : item,
         )
       }
-      return [...current, { ...product, quantity: 1 }]
+      return [...current, { ...product, cartId, selectedShade: shade, quantity: 1 }]
     })
     setCartOpen(true)
   }
 
-  const decrementItem = (id: string) => {
+  const decrementItem = (cartId: string) => {
     setItems((current) =>
       current.flatMap((item) => {
-        if (item.id !== id) return [item]
+        if (item.cartId !== cartId) return [item]
         return item.quantity > 1 ? [{ ...item, quantity: item.quantity - 1 }] : []
       }),
     )
   }
 
-  const removeItem = (id: string) => {
-    setItems((current) => current.filter((item) => item.id !== id))
+  const removeItem = (cartId: string) => {
+    setItems((current) => current.filter((item) => item.cartId !== cartId))
   }
 
-  const count = useMemo(
-    () => items.reduce((total, item) => total + item.quantity, 0),
-    [items],
-  )
+  const count = useMemo(() => items.reduce((total, item) => total + item.quantity, 0), [items])
 
   return (
-    <ShopContext.Provider
-      value={{
-        items,
-        count,
-        cartOpen,
-        setCartOpen,
-        addItem,
-        decrementItem,
-        removeItem,
-      }}
-    >
+    <ShopContext.Provider value={{ items, count, cartOpen, setCartOpen, addItem, decrementItem, removeItem }}>
       {children}
     </ShopContext.Provider>
   )

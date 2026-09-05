@@ -2,28 +2,37 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Menu, Minus, Plus, Search, ShoppingBag, User, X } from "lucide-react"
+import { ChevronDown, Menu, Minus, Plus, Search, ShoppingBag, User, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { BrandMark } from "@/components/brand-mark"
 import { useShop } from "@/components/shop-provider"
-import { formatPrice } from "@/lib/products"
+import { formatPrice, products } from "@/lib/products"
 
 const navItems = [
-  { name: "Shop", href: "#produtos" },
-  { name: "Skincare", href: "#serum-01" },
-  { name: "Maquiagem", href: "#produtos" },
-  { name: "Sobre", href: "#sobre" },
-  { name: "Journal", href: "#journal" },
+  { name: "Shop", href: "/shop" },
+  { name: "Lábios", href: "/labios", children: ["Batom", "Gloss", "Lip Oil", "Lápis labial"] },
+  { name: "Rosto", href: "/rosto", children: ["Base", "Corretivo", "Pó", "Bronzer"] },
+  { name: "Olhos", href: "/olhos", children: ["Máscara", "Delineador", "Sombra", "Sobrancelha"] },
+  { name: "Blush", href: "/blush", children: ["Cream", "Liquid", "Soft Matte", "Glow"] },
+]
+
+const mobileItems = [
+  ...navItems,
+  { name: "Best Sellers", href: "/best-sellers" },
+  { name: "Sobre", href: "/#sobre" },
+  { name: "Journal", href: "/#journal" },
 ]
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const [accountNotice, setAccountNotice] = useState(false)
   const { items, count, cartOpen, setCartOpen, addItem, decrementItem, removeItem } = useShop()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 16)
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
@@ -52,25 +61,37 @@ export function Header() {
     setCartOpen(false)
   }
 
+  const searchResults = query.trim().length > 1
+    ? products.filter((product) =>
+        [product.name, product.type, product.categoryLabel].join(" ").toLowerCase().includes(query.toLowerCase()),
+      ).slice(0, 5)
+    : products.filter((product) => product.bestseller)
+
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
   return (
     <>
       <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
         <nav className="site-header__inner" aria-label="Navegação principal">
           <div className="site-header__left">
-            <button
-              type="button"
-              className="icon-button mobile-only"
-              onClick={() => setMenuOpen(true)}
-              aria-label="Abrir menu"
-              aria-expanded={menuOpen}
-            >
+            <button type="button" className="icon-button mobile-only" onClick={() => setMenuOpen(true)} aria-label="Abrir menu" aria-expanded={menuOpen}>
               <Menu aria-hidden="true" />
             </button>
             <div className="desktop-nav">
               {navItems.map((item) => (
-                <Link className="nav-link" href={item.href} key={item.name}>
-                  {item.name}
-                </Link>
+                <div className="nav-item" key={item.name}>
+                  <Link className="nav-link" href={item.href}>
+                    {item.name}
+                    {item.children ? <ChevronDown aria-hidden="true" /> : null}
+                  </Link>
+                  {item.children ? (
+                    <div className="nav-dropdown">
+                      <p>{item.name}</p>
+                      {item.children.map((child) => <Link href={item.href} key={child}>{child}</Link>)}
+                      <Link className="nav-dropdown__all" href={item.href}>Ver todos <span>→</span></Link>
+                    </div>
+                  ) : null}
+                </div>
               ))}
             </div>
           </div>
@@ -78,69 +99,51 @@ export function Header() {
           <BrandMark />
 
           <div className="site-actions">
-            <button type="button" className="text-action desktop-action" onClick={() => setSearchOpen(true)}>
-              <Search aria-hidden="true" />
-              <span>Pesquisa</span>
+            <button type="button" className="text-action" onClick={() => setSearchOpen(true)} aria-label="Buscar">
+              <Search aria-hidden="true" /><span className="desktop-action">Buscar</span>
             </button>
-            <button type="button" className="text-action desktop-action" onClick={() => setSearchOpen(true)}>
-              <User aria-hidden="true" />
-              <span>Conta</span>
+            <button type="button" className="text-action desktop-action" onClick={() => { setAccountNotice(true); window.setTimeout(() => setAccountNotice(false), 2200) }}>
+              <User aria-hidden="true" /><span>Conta</span>
             </button>
-            <button
-              type="button"
-              className="text-action cart-trigger"
-              onClick={() => setCartOpen(true)}
-              aria-label={`Abrir sacola, ${count} ${count === 1 ? "item" : "itens"}`}
-            >
-              <ShoppingBag aria-hidden="true" />
-              <span className="desktop-action">Sacola</span>
-              <span className="cart-count" aria-hidden="true">{String(count).padStart(2, "0")}</span>
+            <button type="button" className="text-action cart-trigger" onClick={() => setCartOpen(true)} aria-label={`Abrir sacola, ${count} ${count === 1 ? "item" : "itens"}`}>
+              <ShoppingBag aria-hidden="true" /><span className="desktop-action">Sacola</span><span className="cart-count" aria-hidden="true">({count})</span>
             </button>
           </div>
         </nav>
       </header>
 
+      <p className={`account-notice ${accountNotice ? "is-visible" : ""}`} role="status">
+        Área de conta disponível na experiência completa.
+      </p>
+
       <div className={`overlay ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen}>
         <button className="overlay__backdrop" onClick={closeAll} aria-label="Fechar menu" />
         <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu de navegação">
-          <div className="drawer-head">
-            <BrandMark />
-            <button className="icon-button" onClick={closeAll} aria-label="Fechar menu"><X aria-hidden="true" /></button>
-          </div>
+          <div className="drawer-head"><BrandMark /><button className="icon-button" onClick={closeAll} aria-label="Fechar menu"><X aria-hidden="true" /></button></div>
           <div className="mobile-menu__nav">
-            {navItems.map((item, index) => (
-              <Link href={item.href} key={item.name} onClick={closeAll}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                {item.name}
-              </Link>
-            ))}
+            {mobileItems.map((item) => <Link href={item.href} key={item.name} onClick={closeAll}>{item.name}<span>↗</span></Link>)}
           </div>
-          <div className="mobile-menu__footer">
-            <p>ROSÉ / SKIN RITUAL 01</p>
-            <button type="button" onClick={() => { setMenuOpen(false); setSearchOpen(true) }}>
-              <Search aria-hidden="true" /> Pesquisar no universo ROSÉ
-            </button>
-          </div>
+          <div className="mobile-menu__footer"><p>MAKEUP WITHOUT RULES.</p><button type="button" onClick={() => { setMenuOpen(false); setSearchOpen(true) }}><Search aria-hidden="true" /> Buscar produtos</button></div>
         </div>
       </div>
 
       <div className={`overlay ${searchOpen ? "is-open" : ""}`} aria-hidden={!searchOpen}>
-        <button className="overlay__backdrop" onClick={closeAll} aria-label="Fechar pesquisa" />
-        <div className="search-panel" role="dialog" aria-modal="true" aria-label="Pesquisa">
-          <div className="drawer-head">
-            <p className="eyebrow">Pesquisa</p>
-            <button className="icon-button" onClick={closeAll} aria-label="Fechar pesquisa"><X aria-hidden="true" /></button>
-          </div>
+        <button className="overlay__backdrop" onClick={closeAll} aria-label="Fechar busca" />
+        <div className="search-panel" role="dialog" aria-modal="true" aria-label="Busca">
+          <div className="drawer-head"><p className="eyebrow">Buscar na ROSÉ</p><button className="icon-button" onClick={closeAll} aria-label="Fechar busca"><X aria-hidden="true" /></button></div>
           <label className="search-field">
             <span className="sr-only">O que você procura?</span>
-            <input autoFocus={searchOpen} type="search" placeholder="O que você procura?" />
+            <input autoFocus={searchOpen} value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder="Batom, blush, gloss..." />
             <Search aria-hidden="true" />
           </label>
-          <div className="search-suggestions">
-            <span>Sugestões</span>
-            <Link href="#serum-01" onClick={closeAll}>Sérum Nº01</Link>
-            <Link href="#ingredientes" onClick={closeAll}>Ingredientes</Link>
-            <Link href="#journal" onClick={closeAll}>Rituais essenciais</Link>
+          <div className="search-results">
+            <span>{query.trim().length > 1 ? "Resultados" : "Mais buscados"}</span>
+            {searchResults.map((product) => (
+              <Link href={`/${product.category}#${product.id}`} onClick={closeAll} key={product.id}>
+                <span>{product.name}<small>{product.type}</small></span><strong>{formatPrice(product.price)}</strong>
+              </Link>
+            ))}
+            {searchResults.length === 0 ? <p>Nenhum produto encontrado.</p> : null}
           </div>
         </div>
       </div>
@@ -148,49 +151,21 @@ export function Header() {
       <div className={`overlay ${cartOpen ? "is-open" : ""}`} aria-hidden={!cartOpen}>
         <button className="overlay__backdrop" onClick={closeAll} aria-label="Fechar sacola" />
         <aside className="cart-drawer" role="dialog" aria-modal="true" aria-label="Sua sacola">
-          <div className="drawer-head">
-            <div>
-              <p className="eyebrow">Sua sacola</p>
-              <p className="drawer-count">{count} {count === 1 ? "item" : "itens"}</p>
-            </div>
-            <button className="icon-button" onClick={closeAll} aria-label="Fechar sacola"><X aria-hidden="true" /></button>
-          </div>
+          <div className="drawer-head"><div><p className="eyebrow">Sua sacola</p><p className="drawer-count">{count} {count === 1 ? "item" : "itens"}</p></div><button className="icon-button" onClick={closeAll} aria-label="Fechar sacola"><X aria-hidden="true" /></button></div>
           {items.length === 0 ? (
-            <div className="empty-cart">
-              <ShoppingBag aria-hidden="true" />
-              <h2>Seu ritual começa aqui.</h2>
-              <p>Selecione um essencial para visualizar a experiência da sacola.</p>
-              <button className="button button--dark" type="button" onClick={closeAll}>Conhecer os essenciais</button>
-            </div>
+            <div className="empty-cart"><ShoppingBag aria-hidden="true" /><h2>Sua sacola está vazia.</h2><p>Cor boa é aquela que você decide usar.</p><Link className="button button--wine" href="/best-sellers" onClick={closeAll}>Ver best sellers</Link></div>
           ) : (
             <>
               <div className="cart-items">
                 {items.map((item) => (
-                  <div className="cart-item" key={item.id}>
-                    <div className="cart-item__image">
-                      <Image src={item.image} alt="" fill sizes="92px" style={{ objectFit: "cover", objectPosition: item.imagePosition }} />
-                    </div>
-                    <div className="cart-item__info">
-                      <p>{item.name}</p>
-                      <span>{item.volume}</span>
-                      <div className="quantity-control" aria-label={`Quantidade de ${item.name}`}>
-                        <button onClick={() => decrementItem(item.id)} aria-label="Diminuir quantidade"><Minus /></button>
-                        <span>{item.quantity}</span>
-                        <button onClick={() => addItem(item)} aria-label="Aumentar quantidade"><Plus /></button>
-                      </div>
-                    </div>
-                    <div className="cart-item__aside">
-                      <p>{formatPrice(item.price * item.quantity)}</p>
-                      <button onClick={() => removeItem(item.id)}>Remover</button>
-                    </div>
+                  <div className="cart-item" key={item.cartId}>
+                    <div className="cart-item__image"><Image src={item.image} alt="" fill sizes="92px" style={{ objectFit: "cover", objectPosition: item.imagePosition }} /></div>
+                    <div className="cart-item__info"><p>{item.name}</p><span><i style={{ backgroundColor: item.selectedShade.color }} />{item.selectedShade.name}</span><div className="quantity-control" aria-label={`Quantidade de ${item.name}`}><button onClick={() => decrementItem(item.cartId)} aria-label="Diminuir quantidade"><Minus /></button><span>{item.quantity}</span><button onClick={() => addItem(item, item.selectedShade)} aria-label="Aumentar quantidade"><Plus /></button></div></div>
+                    <div className="cart-item__aside"><p>{formatPrice(item.price * item.quantity)}</p><button onClick={() => removeItem(item.cartId)}>Remover</button></div>
                   </div>
                 ))}
               </div>
-              <div className="cart-summary">
-                <div><span>Subtotal</span><strong>{formatPrice(items.reduce((sum, item) => sum + item.price * item.quantity, 0))}</strong></div>
-                <p>Experiência conceitual — nenhuma compra será processada.</p>
-                <button className="button button--dark" type="button">Visualizar checkout conceitual</button>
-              </div>
+              <div className="cart-summary"><div><span>Subtotal</span><strong>{formatPrice(subtotal)}</strong></div><p>Demonstração de interface — nenhuma compra ou dado de pagamento será processado.</p><button className="button button--wine" type="button">Finalizar compra · Demo</button></div>
             </>
           )}
         </aside>

@@ -1,42 +1,29 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowDown, ArrowUpRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 export function Hero() {
   return (
-    <section className="hero" id="inicio" aria-labelledby="hero-title">
-      <div className="hero__copy">
-        <p className="eyebrow hero__eyebrow">ROSÉ / SKIN RITUAL 01</p>
-        <h1 id="hero-title">
-          Beleza que começa
-          <em>com a sua pele.</em>
-        </h1>
-        <p className="hero__description">
-          Fórmulas essenciais para transformar cuidado em gesto — todos os dias,
-          sem excessos.
-        </p>
-        <Link className="button button--dark" href="#produtos">
-          Descobrir a coleção <ArrowUpRight aria-hidden="true" />
-        </Link>
-        <Link className="scroll-cue" href="#filosofia">
-          <span>Continuar</span>
-          <ArrowDown aria-hidden="true" />
-        </Link>
-      </div>
-      <div className="hero__image image-reveal">
-        <Image
-          src="/images/rose-hero.png"
-          alt="Frascos de sérum e creme ROSÉ sobre pedra, junto à pele iluminada por luz natural"
-          fill
-          priority
-          loading="eager"
-          sizes="(max-width: 767px) 100vw, 61vw"
-        />
-        <div className="hero__image-note">
-          <span>01</span>
-          <p>Textura leve<br />absorção gradual</p>
+    <section className="makeup-hero" id="inicio" aria-labelledby="hero-title">
+      <Image
+        src="/images/makeup-hero.png"
+        alt="Modelo em campanha ROSÉ com batom vinho, blush luminoso e delineado preto"
+        fill
+        priority
+        loading="eager"
+        sizes="100vw"
+      />
+      <div className="makeup-hero__shade" />
+      <div className="makeup-hero__content">
+        <p className="eyebrow">ROSÉ · COLOR COLLECTION 01</p>
+        <h1 id="hero-title">Color speaks<br /><em>first.</em></h1>
+        <p>Maquiagem criada para acompanhar cada versão de você.</p>
+        <div className="makeup-hero__actions">
+          <Link className="button button--light" href="/shop">Comprar coleção <ArrowRight aria-hidden="true" /></Link>
+          <Link className="button button--ghost-light" href="/best-sellers">Best Sellers</Link>
         </div>
       </div>
+      <p className="makeup-hero__caption">YOUR SHADE. YOUR RULES.</p>
     </section>
   )
 }
