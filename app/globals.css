@@ -63,6 +63,10 @@ img {
   object-fit: cover;
 }
 
+.media-contain {
+  object-fit: contain;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -519,9 +523,8 @@ img {
 
 .category-mosaic {
   display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  grid-template-rows: 620px 480px 520px;
-  gap: 18px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .category-tile {
@@ -531,52 +534,36 @@ img {
 .category-tile > a {
   position: relative;
   height: 100%;
-  border-radius: 34px;
+  border: 1px solid rgba(23, 20, 22, .09);
+  border-radius: 26px;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.category-tile__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1312 / 1199;
   display: block;
   overflow: hidden;
 }
 
-.category-tile img {
-  transition: transform 700ms cubic-bezier(.22, 1, .36, 1);
+.category-tile__image img {
+  transition: opacity 220ms ease;
 }
 
-.category-tile:hover img {
-  transform: scale(1.035);
-}
-
-.category-tile--2 {
-  margin-top: 92px;
-}
-
-.category-tile--3 {
-  margin-bottom: 50px;
-}
-
-.category-tile--4 {
-  margin-top: 36px;
-}
-
-.category-tile--best {
-  grid-column: 1 / -1;
-}
-
-.category-tile--best img {
-  object-position: 50% 40%;
-}
-
-.category-tile__veil {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 35%, rgba(29, 5, 12, .66));
+.category-tile:hover .category-tile__image img {
+  opacity: .94;
 }
 
 .category-tile__copy {
-  position: absolute;
-  z-index: 1;
-  left: 30px;
-  bottom: 28px;
-  color: var(--white);
+  min-height: 112px;
+  padding: 17px 52px 18px 18px;
+  color: var(--ink);
   display: grid;
+  align-content: start;
 }
 
 .category-tile__copy small {
@@ -586,25 +573,27 @@ img {
 }
 
 .category-tile__copy strong {
-  font: 500 clamp(3.2rem, 6vw, 6rem)/.8 var(--display);
-  letter-spacing: -.05em;
+  font: 500 clamp(1.45rem, 2vw, 2rem)/1 var(--display);
+  letter-spacing: -.025em;
 }
 
 .category-tile__copy em {
-  margin-top: 12px;
-  font: 500 .68rem/1 var(--sans);
-  letter-spacing: .13em;
+  margin-top: 8px;
+  color: var(--muted);
+  font: 500 .59rem/1.35 var(--sans);
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
 .category-tile > a > svg {
   position: absolute;
   z-index: 1;
-  right: 28px;
-  bottom: 28px;
-  width: 46px;
-  height: 46px;
-  padding: 12px;
+  right: 16px;
+  bottom: 18px;
+  width: 34px;
+  height: 34px;
+  padding: 9px;
+  border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--wine-dark);
   background: var(--white);
@@ -791,34 +780,35 @@ img {
 
 /* Campaigns and editorials */
 .red-edit {
-  position: relative;
-  height: min(86vw, 920px);
-  min-height: 680px;
   color: var(--white);
+  background: var(--paper);
+}
+
+.red-edit__frame {
+  border-radius: 38px;
+  background: var(--wine-dark);
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(340px, .65fr);
+  align-items: stretch;
   overflow: hidden;
 }
 
-.red-edit > img {
-  object-position: center;
-}
-
-.red-edit__shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(43,0,8,.05), rgba(40,0,9,.66));
+.red-edit__media {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  background: #c8aa96;
 }
 
 .red-edit__content {
-  position: absolute;
-  right: max(24px, calc((100vw - 1440px) / 2));
-  top: 50%;
-  width: min(520px, 40vw);
-  transform: translateY(-50%);
+  padding: clamp(38px, 5vw, 76px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .red-edit__content h2 {
   margin: 18px 0 24px;
-  font: 500 clamp(4.5rem, 8vw, 8.5rem)/.76 var(--display);
+  font: 500 clamp(3.4rem, 5vw, 6rem)/.78 var(--display);
   letter-spacing: -.065em;
 }
 
@@ -848,8 +838,10 @@ img {
 
 .philosophy__image {
   position: relative;
-  height: min(68vw, 860px);
+  width: 100%;
+  aspect-ratio: 2 / 3;
   border-radius: 42px;
+  background: #cbb2a4;
   overflow: hidden;
 }
 
@@ -869,7 +861,6 @@ img {
 
 .philosophy__copy h2,
 .blush-edit__copy h2,
-.brand-story h2,
 .newsletter h2 {
   margin: 14px 0 32px;
   font: 500 clamp(4.5rem, 8vw, 8.5rem)/.73 var(--display);
@@ -878,7 +869,6 @@ img {
 
 .philosophy__copy h2 em,
 .blush-edit__copy h2 em,
-.brand-story h2 em,
 .newsletter h2 em {
   color: var(--wine);
   font-weight: 400;
@@ -923,15 +913,15 @@ img {
 .lip-edit__campaign {
   position: sticky;
   top: calc(var(--header-height) + 18px);
-  height: calc(100vh - var(--header-height) - 36px);
-  min-height: 650px;
+  align-self: start;
 }
 
 .lip-edit__campaign-image {
   position: relative;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 2;
   border-radius: 38px;
+  background: #c6a58f;
   overflow: hidden;
 }
 
@@ -973,8 +963,10 @@ img {
 
 .blush-edit__image {
   position: relative;
-  height: min(67vw, 850px);
+  width: 100%;
+  aspect-ratio: 3 / 2;
   border-radius: 42px;
+  background: #c8ad9b;
   overflow: hidden;
 }
 
@@ -1028,8 +1020,10 @@ img {
 
 .featured-blush__image {
   position: relative;
-  height: min(66vw, 820px);
+  width: 100%;
+  aspect-ratio: 1374 / 1145;
   border-radius: 42px;
+  background: #c8ae9b;
   overflow: hidden;
 }
 
@@ -1074,53 +1068,26 @@ img {
   height: 15px;
 }
 
-/* Brand, journal, newsletter */
-.brand-story {
-  background: var(--white);
-}
-
-.brand-story__grid {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: clamp(50px, 10vw, 180px);
-}
-
-.brand-story__text {
-  padding-top: 46px;
-}
-
-.brand-story__text p {
-  margin: 0 0 24px;
-  color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.8;
-}
-
-.brand-story__text p:first-child {
-  color: var(--ink);
-  font: 400 clamp(1.75rem, 3vw, 2.8rem)/1.25 var(--display);
-}
-
-.brand-story__text span {
-  margin-top: 40px;
-  color: var(--wine);
-  display: block;
-  font: 600 .67rem/1 var(--sans);
-  letter-spacing: .2em;
-}
-
+/* Journal and newsletter */
 .journal {
   background: var(--paper);
 }
 
 .journal__grid {
   display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 46px 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 54px 22px;
 }
 
 .journal-card--1 {
-  grid-row: span 2;
+  grid-column: 1 / -1;
+}
+
+.journal-card.journal-card--1 a {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
 }
 
 .journal-card a {
@@ -1129,21 +1096,23 @@ img {
 
 .journal-card__image {
   position: relative;
-  height: 360px;
+  width: 100%;
+  aspect-ratio: 1145 / 1374;
   border-radius: 30px;
+  background: #6f4b3e;
   overflow: hidden;
 }
 
 .journal-card--1 .journal-card__image {
-  height: 720px;
+  aspect-ratio: 1374 / 1145;
 }
 
 .journal-card__image img {
-  transition: transform 600ms ease;
+  transition: opacity 220ms ease;
 }
 
 .journal-card a:hover img {
-  transform: scale(1.035);
+  opacity: .94;
 }
 
 .journal-card__meta {
@@ -1822,6 +1791,10 @@ img {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .category-mosaic {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .best-sellers__track > :last-child {
     display: none;
   }
@@ -1867,13 +1840,12 @@ img {
   }
 
   .category-mosaic {
-    grid-template-rows: 500px 400px 450px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .philosophy__grid,
   .blush-edit__grid,
   .featured-blush__grid,
-  .brand-story__grid,
   .newsletter__grid {
     gap: 42px;
   }
@@ -1885,16 +1857,10 @@ img {
   .lip-edit__campaign {
     position: relative;
     top: auto;
-    height: 70vw;
-    min-height: 520px;
   }
 
-  .journal-card__image {
-    height: 300px;
-  }
-
-  .journal-card--1 .journal-card__image {
-    height: 640px;
+  .journal-card.journal-card--1 a {
+    grid-template-columns: minmax(0, 1.15fr) minmax(230px, .85fr);
   }
 }
 
@@ -1958,20 +1924,19 @@ img {
 
   .category-mosaic {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
 
-  .category-tile,
-  .category-tile--2,
-  .category-tile--3,
-  .category-tile--4 {
-    height: 470px;
-    margin: 0;
+  .category-mosaic::-webkit-scrollbar {
+    display: none;
   }
 
-  .category-tile--best {
-    height: 390px;
+  .category-tile {
+    flex: 0 0 min(82vw, 340px);
+    scroll-snap-align: start;
   }
 
   .category-tile > a {
@@ -2000,35 +1965,25 @@ img {
   }
 
   .red-edit {
-    height: 780px;
-    min-height: 0;
+    color: var(--white);
   }
 
-  .red-edit > img {
-    object-position: 32% center;
-  }
-
-  .red-edit__shade {
-    background: linear-gradient(180deg, transparent 30%, rgba(43,0,8,.82));
+  .red-edit__frame {
+    border-radius: 28px;
+    grid-template-columns: 1fr;
   }
 
   .red-edit__content {
-    left: 18px;
-    right: 18px;
-    top: auto;
-    bottom: 46px;
-    width: auto;
-    transform: none;
+    padding: 34px 24px 38px;
   }
 
   .red-edit__content h2 {
-    font-size: clamp(4rem, 18vw, 6.8rem);
+    font-size: clamp(3.7rem, 17vw, 5.8rem);
   }
 
   .philosophy__grid,
   .blush-edit__grid,
   .featured-blush__grid,
-  .brand-story__grid,
   .newsletter__grid {
     grid-template-columns: 1fr;
   }
@@ -2036,14 +1991,11 @@ img {
   .philosophy__image,
   .blush-edit__image,
   .featured-blush__image {
-    height: 122vw;
-    max-height: 680px;
     border-radius: 30px;
   }
 
   .philosophy__copy h2,
   .blush-edit__copy h2,
-  .brand-story h2,
   .newsletter h2 {
     font-size: clamp(4.2rem, 20vw, 7rem);
   }
@@ -2057,8 +2009,7 @@ img {
   }
 
   .lip-edit__campaign {
-    height: 112vw;
-    min-height: 0;
+    width: 100%;
   }
 
   .lip-edit__campaign-image {
@@ -2091,23 +2042,17 @@ img {
     padding: 18px 5px 0;
   }
 
-  .brand-story__text {
-    padding-top: 0;
-  }
-
   .journal__grid {
     grid-template-columns: 1fr;
     gap: 46px;
   }
 
   .journal-card--1 {
-    grid-row: auto;
+    grid-column: auto;
   }
 
-  .journal-card__image,
-  .journal-card--1 .journal-card__image {
-    height: 112vw;
-    max-height: 620px;
+  .journal-card.journal-card--1 a {
+    display: block;
   }
 
   .newsletter__grid {
@@ -2204,26 +2149,18 @@ img {
     font-size: .61rem;
   }
 
-  .category-tile {
-    height: 410px;
-  }
-
-  .category-tile--best {
-    height: 340px;
-  }
-
   .category-tile__copy {
-    left: 20px;
-    bottom: 21px;
+    min-height: 104px;
+    padding: 15px 48px 16px 16px;
   }
 
   .category-tile__copy strong {
-    font-size: 3.5rem;
+    font-size: 1.55rem;
   }
 
   .category-tile > a > svg {
-    right: 18px;
-    bottom: 18px;
+    right: 14px;
+    bottom: 16px;
   }
 
   .product-card__visual {
@@ -2232,10 +2169,6 @@ img {
 
   .product-card__line h3 {
     font-size: 1.35rem;
-  }
-
-  .red-edit {
-    height: 700px;
   }
 
   .mobile-menu,

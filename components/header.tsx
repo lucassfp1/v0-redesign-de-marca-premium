@@ -19,7 +19,6 @@ const navItems = [
 const mobileItems = [
   ...navItems,
   { name: "Best Sellers", href: "/best-sellers" },
-  { name: "Sobre", href: "/#sobre" },
   { name: "Journal", href: "/#journal" },
 ]
 

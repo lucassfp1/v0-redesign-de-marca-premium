@@ -1,6 +1,5 @@
 import {
   BlushEdit,
-  BrandStory,
   CategoryShowcase,
   FeaturedBlush,
   Journal,
@@ -17,13 +16,12 @@ export default function Home() {
     <main>
       <Hero />
       <CategoryShowcase />
-      <FeaturedProducts />
       <RedEdit />
+      <FeaturedProducts />
       <Philosophy />
       <LipEdit />
-      <BlushEdit />
       <FeaturedBlush />
-      <BrandStory />
+      <BlushEdit />
       <Journal />
       <Newsletter />
     </main>

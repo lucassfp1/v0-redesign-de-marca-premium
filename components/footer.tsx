@@ -3,7 +3,7 @@ import { BrandMark } from "@/components/brand-mark"
 
 const groups = [
   { title: "Shop", links: [["Todos", "/shop"], ["Lábios", "/labios"], ["Rosto", "/rosto"], ["Olhos", "/olhos"], ["Blush", "/blush"], ["Best Sellers", "/best-sellers"]] },
-  { title: "ROSÉ", links: [["Sobre", "/#sobre"], ["Journal", "/#journal"], ["Campanhas", "/#best-sellers"]] },
+  { title: "ROSÉ", links: [["Journal", "/#journal"], ["Campanha", "/#campanha"], ["Mais desejados", "/#best-sellers"]] },
   { title: "Suporte", links: [["Contato", "/#newsletter"], ["FAQ", "/#newsletter"], ["Envios", "/#newsletter"], ["Trocas", "/#newsletter"]] },
   { title: "Social", links: [["Instagram", "#footer"], ["Pinterest", "#footer"], ["TikTok", "#footer"]] },
 ]

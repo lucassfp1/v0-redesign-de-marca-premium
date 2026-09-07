@@ -18,7 +18,7 @@ export function FeaturedBlush() {
     <section className="featured-blush section-pad" aria-labelledby="featured-blush-title">
       <div className="section-shell featured-blush__grid">
         <Reveal className="featured-blush__image">
-          <Image src="/images/home/liquid-blush-feature.png" alt="Liquid Blush Nº02 ELORA, marca da ROSÉ Beauty, em vidro rosado com aplicador" fill sizes="(max-width: 767px) 92vw, 48vw" />
+          <Image className="media-contain" src="/images/home/liquid-blush-feature.png" alt="Liquid Blush Nº02 ELORA, marca da ROSÉ Beauty, em vidro rosado com aplicador" fill sizes="(max-width: 767px) 92vw, 48vw" />
         </Reveal>
         <Reveal className="featured-blush__copy" delay={80}>
           <p className="eyebrow">Produto em destaque</p>
