@@ -5,8 +5,8 @@ E-commerce conceitual de uma marca contemporânea de maquiagem. O projeto demons
 ## Direção
 
 - identidade fashion em vinho, rosa queimado, off-white e preto;
-- oito fotografias originais produzidas para o universo visual ROSÉ;
-- vinte produtos centralizados em `lib/products.ts`, sem duplicação por categoria;
+- trinta e quatro imagens fornecidas para o projeto, organizadas por produto, categoria e editorial;
+- vinte produtos centralizados em `lib/products.ts`, cada um com uma fotografia própria;
 - rotas `/shop`, `/labios`, `/rosto`, `/olhos`, `/blush` e `/best-sellers`;
 - filtros, ordenação, swatches selecionáveis, busca e mini-sacola demonstrativa;
 - mega menu desktop, drawer mobile e carrosséis por gesto;

@@ -123,7 +123,7 @@ export function Header() {
           <div className="mobile-menu__nav">
             {mobileItems.map((item) => <Link href={item.href} key={item.name} onClick={closeAll}>{item.name}<span>↗</span></Link>)}
           </div>
-          <div className="mobile-menu__footer"><p>MAKEUP WITHOUT RULES.</p><button type="button" onClick={() => { setMenuOpen(false); setSearchOpen(true) }}><Search aria-hidden="true" /> Buscar produtos</button></div>
+          <div className="mobile-menu__footer"><p>COR, TEXTURA E PRESENÇA.</p><button type="button" onClick={() => { setMenuOpen(false); setSearchOpen(true) }}><Search aria-hidden="true" /> Buscar produtos</button></div>
         </div>
       </div>
 

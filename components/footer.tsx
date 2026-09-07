@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <footer className="footer" id="footer">
       <div className="section-shell">
-        <div className="footer__top"><BrandMark inverse /><p>COLOR SPEAKS<br />FIRST.</p></div>
+        <div className="footer__top"><BrandMark inverse /><p>COR, TEXTURA<br />E PRESENÇA.</p></div>
         <div className="footer__wordmark" aria-hidden="true">ROSÉ</div>
         <div className="footer__links">
           {groups.map((group) => <div key={group.title}><h2>{group.title}</h2><ul>{group.links.map(([label, href]) => <li key={label}><Link href={href}>{label}</Link></li>)}</ul></div>)}

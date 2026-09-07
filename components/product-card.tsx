@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Plus } from "lucide-react"
 import { useState } from "react"
-import type { CSSProperties } from "react"
 import { useShop } from "@/components/shop-provider"
 import { formatPrice, type Product } from "@/lib/products"
 
@@ -12,12 +11,6 @@ export function ProductCard({ product, priority = false }: { product: Product; p
   const { addItem } = useShop()
   const [shadeIndex, setShadeIndex] = useState(0)
   const selectedShade = product.swatches[shadeIndex] ?? product.swatches[0]
-  const imageStyle = {
-    objectFit: "cover",
-    objectPosition: "center",
-    transformOrigin: product.imagePosition,
-    "--image-scale": product.imageScale ?? 1,
-  } as CSSProperties
 
   return (
     <article className="product-card">
@@ -25,23 +18,13 @@ export function ProductCard({ product, priority = false }: { product: Product; p
         <Image
           className="product-card__image"
           src={product.image}
-          alt={`${product.name}, ${product.type}, em embalagem ROSÉ`}
+          alt={`${product.name}, ${product.type}, em embalagem ELORA da ROSÉ Beauty`}
           fill
           priority={priority}
           loading={priority ? "eager" : "lazy"}
           sizes="(max-width: 639px) 78vw, (max-width: 1023px) 46vw, 25vw"
-          style={imageStyle}
+          style={{ objectFit: "cover", objectPosition: product.imagePosition ?? "center" }}
         />
-        {product.hoverImage ? (
-          <Image
-            className="product-card__image product-card__image--hover"
-            src={product.hoverImage}
-            alt=""
-            fill
-            sizes="(max-width: 639px) 78vw, (max-width: 1023px) 46vw, 25vw"
-            style={{ objectFit: "cover" }}
-          />
-        ) : null}
         <div className="product-card__flags">
           {product.bestseller ? <span>Best seller</span> : null}
           {product.isNew ? <span>Novo</span> : null}

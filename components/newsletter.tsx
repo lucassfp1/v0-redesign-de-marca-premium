@@ -23,11 +23,11 @@ export function Newsletter() {
     <section className="newsletter section-pad" id="newsletter" aria-labelledby="newsletter-title">
       <div className="section-shell newsletter__grid">
         <Reveal>
-          <p className="eyebrow">ROSÉ List</p>
-          <h2 id="newsletter-title">Be first to<br /><em>wear it.</em></h2>
+          <p className="eyebrow">Novidades ROSÉ</p>
+          <h2 id="newsletter-title">Entre na lista.</h2>
         </Reveal>
         <Reveal className="newsletter__content" delay={90}>
-          <p>Novas cores, campanhas e beauty notes. Sem excesso na sua caixa de entrada.</p>
+          <p>Novas cores, campanhas e notas de beleza. Só o que merece chegar à sua caixa de entrada.</p>
           <form onSubmit={submit} noValidate>
             <label htmlFor="newsletter-email">Seu e-mail</label>
             <div className="newsletter__field">

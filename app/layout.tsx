@@ -23,25 +23,25 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL("https://v0-redesign-de-marca-premium.vercel.app"),
   title: {
-    default: "ROSÉ Beauty — Makeup Without Rules",
+    default: "ROSÉ Beauty — Cor, textura e presença",
     template: "%s — ROSÉ Beauty",
   },
   description: "Maquiagem contemporânea para usar do seu jeito. Descubra lábios, rosto, olhos e blush ROSÉ.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "ROSÉ Beauty — Makeup Without Rules",
-    description: "Cor, textura e atitude. Maquiagem criada para acompanhar cada versão de você.",
+    title: "ROSÉ Beauty — Cor, textura e presença",
+    description: "Maquiagem contemporânea em cores, texturas e acabamentos escolhidos com precisão.",
     url: "/",
     siteName: "ROSÉ Beauty",
     locale: "pt_BR",
     type: "website",
-    images: [{ url: "/images/makeup-hero.png", width: 1536, height: 1024, alt: "Campanha de maquiagem ROSÉ Beauty" }],
+    images: [{ url: "/images/home/hero.png", width: 1536, height: 1024, alt: "Campanha de maquiagem ROSÉ Beauty" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ROSÉ Beauty — Makeup Without Rules",
-    description: "Cor, textura e atitude. Maquiagem criada para acompanhar cada versão de você.",
-    images: ["/images/makeup-hero.png"],
+    title: "ROSÉ Beauty — Cor, textura e presença",
+    description: "Maquiagem contemporânea em cores, texturas e acabamentos escolhidos com precisão.",
+    images: ["/images/home/hero.png"],
   },
   icons: { icon: "/brand/rose-favicon.svg" },
 }

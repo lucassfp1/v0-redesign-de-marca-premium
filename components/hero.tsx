@@ -6,8 +6,8 @@ export function Hero() {
   return (
     <section className="makeup-hero" id="inicio" aria-labelledby="hero-title">
       <Image
-        src="/images/makeup-hero.png"
-        alt="Modelo em campanha ROSÉ com batom vinho, blush luminoso e delineado preto"
+        src="/images/home/hero.png"
+        alt="Modelo apresenta o Liquid Blush ELORA, marca da ROSÉ Beauty"
         fill
         priority
         loading="eager"
@@ -15,15 +15,14 @@ export function Hero() {
       />
       <div className="makeup-hero__shade" />
       <div className="makeup-hero__content">
-        <p className="eyebrow">ROSÉ · COLOR COLLECTION 01</p>
-        <h1 id="hero-title">Color speaks<br /><em>first.</em></h1>
-        <p>Maquiagem criada para acompanhar cada versão de você.</p>
+        <p className="eyebrow">ROSÉ BEAUTY · NOVA COLEÇÃO</p>
+        <h1 id="hero-title">Beleza,<br />sem ruído.</h1>
+        <p>Cor, textura e presença em uma edição contemporânea.</p>
         <div className="makeup-hero__actions">
-          <Link className="button button--light" href="/shop">Comprar coleção <ArrowRight aria-hidden="true" /></Link>
-          <Link className="button button--ghost-light" href="/best-sellers">Best Sellers</Link>
+          <Link className="button button--light" href="/best-sellers">Conheça a seleção <ArrowRight aria-hidden="true" /></Link>
+          <Link className="button button--ghost-light" href="/shop">Ver produtos</Link>
         </div>
       </div>
-      <p className="makeup-hero__caption">YOUR SHADE. YOUR RULES.</p>
     </section>
   )
 }
